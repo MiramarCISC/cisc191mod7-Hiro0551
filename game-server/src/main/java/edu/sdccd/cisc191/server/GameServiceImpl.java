@@ -80,9 +80,28 @@ public class GameServiceImpl extends GameServiceGrpc.GameServiceImplBase {
             String difficulty,
             boolean ranked
     ) {
-        return "TODO: build join summary";
-    }
+        {
+            if (matchId == null || matchId.isBlank()) {
+                return "No match";
+            }
 
+            String safePlayer = (playerName == null || playerName.isBlank())
+                    ? "Player"
+                    : playerName;
+
+            String safeOpponent = (opponentName == null || opponentName.isBlank())
+                    ? "Bot"
+                    : opponentName;
+
+            String safeDifficulty = (difficulty == null || difficulty.isBlank())
+                    ? "Normal"
+                    : difficulty;
+
+            String mode = ranked ? "ranked" : "casual";
+
+            return "Match " + matchId + ": " + safePlayer + " vs " + safeOpponent + " (" + safeDifficulty + ", " + mode + ")";
+        }
+    }
     @Override
     public void playMatch(
             PlayMatchRequest request,

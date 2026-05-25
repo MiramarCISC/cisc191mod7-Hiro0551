@@ -197,8 +197,6 @@ public class GameController {
     }
 
     /**
-     * TODO 3: Complete this controller helper.
-     *
      * Return exactly:
      * Joining ranked match as Ada on Hard difficulty...
      * or:
@@ -209,12 +207,16 @@ public class GameController {
      * - Use "Normal" when difficulty is null or blank.
      * - Trim playerName and difficulty.
      */
+
     public static String buildJoinLogMessage(String playerName, String difficulty, boolean ranked) {
-        return "TODO: build join log message";
+        String msgPlayer = (playerName == null || playerName.isBlank()) ? "Player" : playerName.trim();
+        String msgDifficulty = (difficulty == null || difficulty.isBlank()) ? "Normal" : difficulty.trim();
+        String rank = ranked ? "ranked" : "casual";
+
+        return "Joining " + rank + " match as " + msgPlayer + " on " + msgDifficulty + " difficulty...";
     }
 
     /**
-     * TODO 8: Complete this helper so UI updates are safe from any thread.
      *
      * JavaFX controls must be changed on the JavaFX Application Thread.
      * Requirements:
@@ -222,9 +224,15 @@ public class GameController {
      * - If already on the JavaFX Application Thread, run action immediately.
      * - Otherwise, schedule it with Platform.runLater(action).
      */
+
     public static void runOnFxThread(Runnable action) {
         if (action != null) {
             action.run();
+        }
+        if (Platform.isFxApplicationThread()) {
+            action.run();
+        } else {
+            Platform.runLater(action);
         }
     }
 
